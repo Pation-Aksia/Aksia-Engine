@@ -1,0 +1,1 @@
+g++ -o PWTypeShit pipewiretypeshit.cpp $(pkg-config --cflags --libs libpipewire-0.3 libspa-0.2) -lpipewire-0.3

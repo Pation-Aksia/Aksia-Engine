@@ -1,0 +1,7 @@
+g++ -o "Program" \
+"Main.cpp" "AksiaEngine.cpp" "GLContext.cpp" "AWindow.cpp" "AEvent.cpp" "AMath.cpp" "BitmapHandler.cpp" "Texture2D.cpp" "ASound.cpp" \
+-lX11 -lGL
+
+patchelf --set-interpreter /lib64/ld-linux-x86-64.so.2 Program
+
+chmod +x Program

@@ -1,12 +1,16 @@
 #include "AMath.h"
 
-#include <cmath>
-#include <limits>
 #include <iostream>
 
 
 bool AMath::ReliableFloatComp(float i, float j) {
     return (std::abs(i - j) <= std::numeric_limits<float>::epsilon() * std::max(std::abs(i), std::abs(j)));
+}
+
+void AMathSwap(float i, float j) {
+    float t = j;
+    j = i;
+    i = t;
 }
 
 

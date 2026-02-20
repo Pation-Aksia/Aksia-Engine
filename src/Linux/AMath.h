@@ -10,10 +10,15 @@
 #include "Vector4Int.h"
 
 #include <iosfwd>
+#include <cmath>
+#include <limits>
+#include <algorithm>
 
 class AMath {
 public:
     bool static ReliableFloatComp(float i, float j);
+
+    bool static Swap(float i, float j);
 };
 
 #endif

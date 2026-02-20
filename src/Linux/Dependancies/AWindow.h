@@ -4,9 +4,11 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/XKBlib.h>
+#include <X11/extensions/XShm.h>
+
+#include <unordered_map>
 
 class Texture2D;
-
 
 class AWindow {
 private:
@@ -19,14 +21,32 @@ private:
     Colormap _ColorMap;
     XSetWindowAttributes _SWA;
     XWindowAttributes _GWA;
+
+    Atom _XDeleteMessage;
+    bool _Closed = false;
+
+    XShmSegmentInfo _SHMInfo;
+    XImage* _WinXImage = nullptr;
+
     XVisualInfo* _VisualInfo;
     //XWMHints* _WMHints;
     XSizeHints* _SizeHints;
 
+    unsigned short _Width;
+    unsigned short _Height;
+
+    int penCol;
+    bool invertPlotY = false;
+
+    void CreateBuffer();
+    void DestroyBuffer();
+
 public:
 
+    static std::unordered_map<Window, AWindow*> WindowLookup;
+
     //-Constructor-----Destructor-
-    AWindow(int width = 640, int height = 480, int posX = 0, int posY = 0, int borderWidth = 0, int* newVisualAttributes = nullptr, long newXEventMask = -1);
+    AWindow(unsigned short width = 640, unsigned short height = 480, int posX = 0, int posY = 0, int borderWidth = 0, int* newVisualAttributes = nullptr, long newXEventMask = -1);
 
     ~AWindow();
 
@@ -37,6 +57,11 @@ public:
     //-Regular-Functions-
 
     static Display* GetSharedDisplay() { return _Display; }
+
+    void Close();
+    bool IsClosed() const { return _Closed; }
+
+    static int GetWinCount(){ return _WinCount; }
 
     void SetName(const char* name);
 
@@ -55,13 +80,16 @@ public:
 
     //-Drawing-Primitives-
 
+    void ResizeBuffer();
+
+    void DisplayWindow();
+
+
     void SetPenCol(int col);
 
     void Plot(int x, int y);
-    void Plot(XPoint* points, int count, int mode = 0);
 
     void Line(int x1, int y1, int x2, int y2);
-    void Lines(XPoint* points, int count, int mode = 0);
 
     void Rect(int x, int y, int w, int h);
     void FillRect(int x, int y, int w, int h);
@@ -69,14 +97,14 @@ public:
     void Arc(int x, int y, int w, int h, int a1, int a2);
     void FillArc(int x, int y, int w, int h, int a1, int a2);
 
-    void Poly(XPoint* points, int count, int shape, int mode = CoordModeOrigin);
-
-    void DrawTexture(Texture2D& tex, int x, int y, float scaleX = 1, float scaleY = 1);
+    void DrawTexture(Texture2D& tex, int x, int y);
     
     void Text(int x, int y, const char* str, int length) const;
 
 
     void GetSize(int& x, int& y);
+
+    void HandleWindowEvent(const XEvent& event);
 
     void FlushDisplay() const;
 };

@@ -14,13 +14,9 @@ bool AEvent::mouseButtonLastFrame[5];
 bool AEvent::scroll = false;
 bool AEvent::scrollDir = false;
 
-bool AEvent::configNotifyThisFrame = false;
-
 
 void AEvent::MandatoryUpdate(Display* dis) {
     //Display* dis = win.GetSharedDisplay();
-
-    configNotifyThisFrame = false;
 
     mouseXLastFrame = mouseX;
     mouseYLastFrame = mouseY;
@@ -118,12 +114,18 @@ void AEvent::MandatoryUpdate(Display* dis) {
             }
             break;
 
-        case MotionNotify:
+        case MotionNotify: {
             mouseX = e.xmotion.x;
             mouseY = e.xmotion.y;
             break;
+        }
+
         case ConfigureNotify:
-            configNotifyThisFrame = true;
+        case Expose:
+        case ClientMessage: {
+            PassToWindow(e);
+            break;
+        }
         default:
             break;
         }
@@ -192,13 +194,9 @@ bool AEvent::ScrollDir() {
     return scrollDir;
 }
 
-void AEvent::WaitUntilConfigNotify(Display* dis) {
-    int tryCount = 0;
-    while (!configNotifyThisFrame) {
-        if(tryCount >= 500) {
-            break;
-        }
-        MandatoryUpdate(dis);
-        tryCount++;
+void AEvent::PassToWindow(const XEvent& event) {
+    std::unordered_map<Window, AWindow*>::iterator it = AWindow::WindowLookup.find(event.xany.window);
+    if(it != AWindow::WindowLookup.end()) {
+        it->second->HandleWindowEvent(event);
     }
 }

@@ -3,6 +3,9 @@
 
 #include <iosfwd>
 
+
+class Vector4;
+
 class Vector3 {
 public:
     float x, y, z;
@@ -12,12 +15,15 @@ public:
     constexpr Vector3(const Vector2& i, float z) : x(i.x), y(i.y), z(z) {}
     constexpr Vector3(float x, const Vector2& i) : x(x), y(i.x), z(i.y) {}
 
+    constexpr Vector3(const Vector4& i);
+
 
     constexpr Vector3 operator+(const Vector3& i) const {
         return Vector3(x + i.x, y + i.y, z + i.z);
     }
 
-    constexpr Vector3 operator+(const float i) const {
+    template <typename _Type>
+    constexpr Vector3 operator+(const _Type i) const {
         return Vector3(x + i, y + i, z + i);
     }
 
@@ -27,7 +33,8 @@ public:
         z += i.z;
     }
 
-    constexpr void operator+=(const float i) {
+    template <typename _Type>
+    constexpr void operator+=(const _Type i) {
         x += i;
         y += i;
         z += i;
@@ -37,7 +44,8 @@ public:
         return Vector3(x - i.x, y - i.y, z - i.z);
     }
 
-    constexpr Vector3 operator-(const float i) const {
+    template <typename _Type>
+    constexpr Vector3 operator-(const _Type i) const {
         return Vector3(x - i, y - i, z - i);
     }
 
@@ -47,7 +55,8 @@ public:
         z -= i.z;
     }
 
-    constexpr void operator-=(const float i) {
+    template <typename _Type>
+    constexpr void operator-=(const _Type i) {
         x -= i;
         y -= i;
         z -= i;
@@ -57,7 +66,8 @@ public:
         return Vector3(x * i.x, y * i.y, z * i.z);
     }
 
-    constexpr Vector3 operator*(const float i) const {
+    template <typename _Type>
+    constexpr Vector3 operator*(const _Type i) const {
         return Vector3(x * i, y * i, z * i);
     }
 
@@ -67,7 +77,8 @@ public:
         z *= i.z;
     }
 
-    constexpr void operator*=(const float i) {
+    template <typename _Type>
+    constexpr void operator*=(const _Type i) {
         x *= i;
         y *= i;
         z *= i;
@@ -77,7 +88,8 @@ public:
         return Vector3(x / i.x, y / i.y, z / i.z);
     }
 
-    constexpr Vector3 operator/(const float i) const {
+    template <typename _Type>
+    constexpr Vector3 operator/(const _Type i) const {
         return Vector3(x / i, y / i, z / i);
     }
 
@@ -87,7 +99,8 @@ public:
         z /= i.z;
     }
 
-    constexpr void operator/=(const float i) {
+    template <typename _Type>
+    constexpr void operator/=(const _Type i) {
         x /= i;
         y /= i;
         z /= i;

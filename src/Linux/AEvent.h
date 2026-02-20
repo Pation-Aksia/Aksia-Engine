@@ -23,8 +23,6 @@ private:
     static std::unordered_map<int, KeyState> keys;
     static std::vector<int> keysChangedThisFrame;
 
-    static bool configNotifyThisFrame;
-
     static bool IsAutoRepeat(Display* dis, XEvent* e);
 
 public:
@@ -46,7 +44,7 @@ public:
     static bool IsScroll();
     static bool ScrollDir();
 
-    static void WaitUntilConfigNotify(Display* dis);
+    static void PassToWindow(const XEvent& event);
 };
 
 #endif

@@ -7,14 +7,14 @@
 #include <iostream>
 #include <fstream>
 
-void BitmapHandler::LoadBMP(const std::string& filename, int& width, int& height, std::vector<Vector4>& data) {
+bool BitmapHandler::LoadBMP(const std::string& filename, int& width, int& height, std::vector<Vector4>& data) {
 
     std::ifstream file(filename, std::ios::binary);
 
     if (!file.is_open()) {
         std::cout << "Error: Unable to open BMP file!" << std::endl;
         file.close();
-        return;
+        return false;
     }
 
     unsigned char header[54];
@@ -23,7 +23,7 @@ void BitmapHandler::LoadBMP(const std::string& filename, int& width, int& height
     if (header[0] != 'B' || header[1] != 'M') {
         std::cout << "Error: Not a BMP file!" << std::endl;
         file.close();
-        return;
+        return false;
     }
 
     width   = static_cast<int>(header[18]) | (static_cast<int>(header[19]) << 8) | (static_cast<int>(header[20]) << 16) | (static_cast<int>(header[21]) << 24);
@@ -47,7 +47,7 @@ void BitmapHandler::LoadBMP(const std::string& filename, int& width, int& height
     } else {
         std::cout << "Error: Unsupported bit depth: " + std::to_string(bpp) << std::endl;
         file.close();
-        return;
+        return false;
     }
 
     std::vector<uint8_t> row(rowSize);
@@ -60,7 +60,7 @@ void BitmapHandler::LoadBMP(const std::string& filename, int& width, int& height
                     row[idx + 2], // R
                     row[idx + 1], // G
                     row[idx + 0], // B
-                    255.0f                   // A
+                    255.0f        // A
                 );
             } else if (bpp == 32) {
                 data[y * width + x] = Vector4(
@@ -75,4 +75,6 @@ void BitmapHandler::LoadBMP(const std::string& filename, int& width, int& height
     }
 
     file.close();
+
+    return true;
 }

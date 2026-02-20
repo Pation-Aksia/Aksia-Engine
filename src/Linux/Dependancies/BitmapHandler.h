@@ -8,7 +8,7 @@ class Vector4;
 
 class BitmapHandler {
 public:
-    static void LoadBMP(const std::string& filename, int& width, int& height, std::vector<Vector4>& data);
+    static bool LoadBMP(const std::string& filename, int& width, int& height, std::vector<Vector4>& data);
 };
 
 #endif

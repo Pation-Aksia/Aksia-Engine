@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 
+
 class Vector4 {
 public:
     float x, y, z, w;
@@ -22,7 +23,8 @@ public:
         return Vector4(x + i.x, y + i.y, z + i.z, w + i.w);
     }
 
-    constexpr Vector4 operator+(const float i) const {
+    template <typename _Type>
+    constexpr Vector4 operator+(const _Type i) const {
         return Vector4(x + i, y + i, z + i, w+i);
     }
 
@@ -33,7 +35,8 @@ public:
         w += i.w;
     }
 
-    constexpr void operator+=(const float i) {
+    template <typename _Type>
+    constexpr void operator+=(const _Type i) {
         x += i;
         y += i;
         z += i;
@@ -44,7 +47,8 @@ public:
         return Vector4(x - i.x, y - i.y, z - i.z, w - i.w);
     }
 
-    constexpr Vector4 operator-(const float i) const {
+    template <typename _Type>
+    constexpr Vector4 operator-(const _Type i) const {
         return Vector4(x - i, y - i, z - i, w - i);
     }
 
@@ -55,7 +59,8 @@ public:
         w -= i.w;
     }
 
-    constexpr void operator-=(const float i) {
+    template <typename _Type>
+    constexpr void operator-=(const _Type i) {
         x -= i;
         y -= i;
         z -= i;
@@ -66,7 +71,8 @@ public:
         return Vector4(x * i.x, y * i.y, z * i.z, w * i.w);
     }
 
-    constexpr Vector4 operator*(const float i) const {
+    template <typename _Type>
+    constexpr Vector4 operator*(const _Type i) const {
         return Vector4(x * i, y * i, z * i, w * i);
     }
 
@@ -77,7 +83,8 @@ public:
         w *= i.w;
     }
 
-    constexpr void operator*=(const float i) {
+    template <typename _Type>
+    constexpr void operator*=(const _Type i) {
         x *= i;
         y *= i;
         z *= i;
@@ -88,7 +95,8 @@ public:
         return Vector4(x / i.x, y / i.y, z / i.z, w / i.w);
     }
 
-    constexpr Vector4 operator/(const float i) const {
+    template <typename _Type>
+    constexpr Vector4 operator/(const _Type i) const {
         return Vector4(x / i, y / i, z / i, w / i);
     }
 
@@ -99,7 +107,8 @@ public:
         w /= i.w;
     }
 
-    constexpr void operator/=(const float i) {
+    template <typename _Type>
+    constexpr void operator/=(const _Type i) {
         x /= i;
         y /= i;
         z /= i;

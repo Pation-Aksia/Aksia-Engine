@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 
+
 class Vector2Int {
 public:
     int x, y;
@@ -15,7 +16,8 @@ public:
         return Vector2Int(x + i.x, y + i.y);
     }
 
-    constexpr Vector2Int operator+(const int i) const {
+    template <typename _Type>
+    constexpr Vector2Int operator+(const _Type i) const {
         return Vector2Int(x + i, y + i);
     }
 
@@ -24,7 +26,8 @@ public:
         y += i.y;
     }
 
-    constexpr void operator+=(const int i) {
+    template <typename _Type>
+    constexpr void operator+=(const _Type i) {
         x += i;
         y += i;
     }
@@ -33,7 +36,8 @@ public:
         return Vector2Int(x - i.x, y - i.y);
     }
 
-    constexpr Vector2Int operator-(const int i) const {
+    template <typename _Type>
+    constexpr Vector2Int operator-(const _Type i) const {
         return Vector2Int(x - i, y - i);
     }
 
@@ -42,7 +46,8 @@ public:
         y -= i.y;
     }
 
-    constexpr void operator-=(const int i) {
+    template <typename _Type>
+    constexpr void operator-=(const _Type i) {
         x -= i;
         y -= i;
     }
@@ -51,7 +56,8 @@ public:
         return Vector2Int(x * i.x, y * i.y);
     }
 
-    constexpr Vector2Int operator*(const int i) const {
+    template <typename _Type>
+    constexpr Vector2Int operator*(const _Type i) const {
         return Vector2Int(x * i, y * i);
     }
 
@@ -60,7 +66,8 @@ public:
         y *= i.y;
     }
 
-    constexpr void operator*=(const int i) {
+    template <typename _Type>
+    constexpr void operator*=(const _Type i) {
         x *= i;
         y *= i;
     }
@@ -69,7 +76,8 @@ public:
         return Vector2Int(x / i.x, y / i.y);
     }
 
-    constexpr Vector2Int operator/(const int i) const {
+    template <typename _Type>
+    constexpr Vector2Int operator/(const _Type i) const {
         return Vector2Int(x / i, y / i);
     }
 
@@ -78,7 +86,8 @@ public:
         y /= i.y;
     }
 
-    constexpr void operator/=(const int i) {
+    template <typename _Type>
+    constexpr void operator/=(const _Type i) {
         x /= i;
         y /= i;
     }

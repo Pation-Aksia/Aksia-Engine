@@ -44,10 +44,19 @@ void Texture2D::SetSize(Vector2 i) {
     width = i.x;
     height = i.y;
 }
+void Texture2D::SetScale(float x, float y) { scaleX = x; scaleY = y; }
+void Texture2D::SetScale(Vector2 i) {
+    scaleX = i.x;
+    scaleY = i.y;
+}
 
 int Texture2D::GetWidth() { return width; }
 int Texture2D::GetHeight() { return height; }
 Vector2 Texture2D::GetSize() { return Vector2(width, height); }
+
+float Texture2D::GetScaleX() { return scaleX; }
+float Texture2D::GetScaleY() { return scaleY; }
+Vector2 Texture2D::GetScale() { return Vector2(scaleX, scaleY); }
 
 void Texture2D::SetCol(Vector4 i, int x, int y) {
     if(x < 0 || x >= width || y < 0 || y >= height) {
@@ -72,4 +81,16 @@ Vector4 Texture2D::Sample(int x, int y) {
 
 Vector4 Texture2D::Sample(Vector2 i) {
     return pixels[i.x + (i.y*width)];
+}
+
+Vector4 Texture2D::SampleUV(float x, float y) {
+    int ix = (int)std::round(width*x);
+    int iy = (int)std::round(height*y);
+    return pixels[ix + (iy*width)];
+}
+
+Vector4 Texture2D::SampleUV(Vector2 i) {
+    int ix = (int)std::round(width*i.x);
+    int iy = (int)std::round(height*i.y);
+    return pixels[ix + (iy*width)];
 }
